@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="libs/bootstrap/dist/css/bootstrap.css">
+    <script type="text/javascript" src="libs/underscore/underscore.js"></script>
+    <script type="text/javascript" src="libs/angular/angular.js"></script>
+</head>
+
+<body ng-app="main" >
+<div ng-controller="LoginCtrl">
+    <form class="form-inline" ng-show="! username">
+        <div class="form-group">
+            <label>User Name</label>
+            <input type="text" class="form-control" ng-model="user.name">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" class="form-control" ng-model="user.password">
+        </div>
+        <button ng-click="signup(user)">Sign up</button>
+        <button ng-click="login(user)">Login</button>
+    </form>
+    <div ng-show="!! username">Welcome, {{username}}! 
+        <button ng-click="logout()">Logout</button>
+    </div>
+</div>
+    <div class="container" ng-controller="UserCtrl">
+        <form class="form">
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label>first name</label>
+                    <input class="form-control" ng-model="newUser.firstName">
+                </div>
+                <div class="form-group col-md-6">
+                    <label>last name</label>
+                    <input class="form-control" ng-model="newUser.lastName">
+                </div>
+            </div>
+            <button class="btn btn-primary" ng-click="add(newUser)">Submit</button>
+            <button class="btn btn-primary" ng-click="updateUser(newUser)">Update</button>
+        </form>
+        <table class="table table-striped">
+            <tr>
+                <th>first name</th>
+                <th>last name</th>
+            </tr>
+            <tr ng-repeat="(uid, user) in users" ng-dblclick="del(uid)" ng-click="window.console.log(user)">
+                <td>{{user.firstName}}</td>
+                <td>{{user.lastName}}</td>
+            </tr>
+        </table>
+    </div>
+    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="login.js"></script>
+</body>
+
+</html>
