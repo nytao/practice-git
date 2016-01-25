@@ -20,11 +20,10 @@ router.post('/user', function(req, res, next) {
             return db.collection('customer').insert(user)
         })
         .then(function() {
-            if (req.xhr)
+            console.log(req);
                 res.json({
                     user: user
                 });
-            else res.redirect('/')
         })
         .catch(function(err) {
             console.log(err);

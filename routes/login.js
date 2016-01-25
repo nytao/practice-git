@@ -14,18 +14,22 @@ router.post('/', function(req, res, next) {
             } else
                 return db.collection('users').insert(user)
         }).then(function(users) {
-            var defer = Q.defer();
-            req.session.user = user;
-            req.session.save(function(err) {
-                if (err) {
-                    defer.reject(err);
-                } else {
-                    defer.resolve(isLogin ? {
-                        status: users.length > 0
-                    } : user);
-                }
-            });
-            return defer.promise;
+            if (!isLogin || users.length > 0) {
+                var defer = Q.defer();
+                req.session.user = user;
+                req.session.save(function(err) {
+                    if (err) {
+                        defer.reject(err);
+                    } else {
+                        defer.resolve(isLogin ? {
+                            status: users.length > 0
+                        } : user);
+                    }
+                });
+                return defer.promise;
+            }else{
+                return {}
+            }
         })
         .then(res.json.bind(res))
         .catch(function(err) {
